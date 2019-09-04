@@ -4,7 +4,12 @@ import { TouchableOpacity, View, Text, Image } from 'react-native';
 
 import styles from './styles';
 
-const ClearButton = ({ text, onPress }) => (
+type Props = {
+  text: string,
+  onPress: Function,
+};
+
+const ClearButton = ({ text, onPress }: Props) => (
   <TouchableOpacity style={styles.container} onPress={onPress}>
     <View style={styles.wrapper}>
       <Image

@@ -4,7 +4,11 @@ import { View, TouchableOpacity, Image } from 'react-native';
 
 import styles from './styles';
 
-const Header = ({ onPress }) => (
+type Props = {
+  onPress: Function,
+};
+
+const Header = ({ onPress }: Props) => (
   <View style={styles.container}>
     <TouchableOpacity onPress={onPress} style={styles.button}>
       <Image

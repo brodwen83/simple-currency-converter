@@ -5,7 +5,14 @@ import PropTypes from 'prop-types';
 
 import styles from './styles';
 
-const LastConverted = ({ base, date, quote, conversionRate }) => (
+type Props = {
+  date: Object,
+  base: string,
+  quote: string,
+  conversionRate: number,
+};
+
+const LastConverted = ({ base, date, quote, conversionRate }: Props) => (
   <Text style={styles.smallText}>
     {`1 ${base} = ${conversionRate} ${quote} as of ${moment(date).format(
       'MMMM D, YYYY',

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import styles from './styles';
 
-const InputWithButton = (props) => {
+const InputWithButton = (props: Object) => {
   const { buttonText, onPress, editable = true } = props;
   const containerStyles = [styles.container];
   const underlayColor = color(styles.$buttonBackgroundColorBase).darken(

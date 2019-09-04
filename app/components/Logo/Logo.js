@@ -9,8 +9,18 @@ import styles from './styles';
 
 const ANIMATION_DURATION = 250;
 
-class Logo extends Component {
-  constructor(props) {
+type Props = {};
+
+class Logo extends Component<Props> {
+  containerImageWidth: any;
+
+  imageWidth: any;
+
+  keyboardShowListener: any;
+
+  keyboardHideListener: any;
+
+  constructor(props: Object) {
     super(props);
 
     this.containerImageWidth = new Animated.Value(styles.$largeContainerSize);
@@ -71,13 +81,17 @@ class Logo extends Component {
     const containerImageStyle = [
       styles.containerImage,
       {
-        width: this.containerImageWidth, height: this.containerImageWidth,
+        width: this.containerImageWidth,
+        height: this.containerImageWidth,
       },
     ];
 
-    const imageStyle = [styles.logo, {
-      width: this.imageWidth,
-    }];
+    const imageStyle = [
+      styles.logo,
+      {
+        width: this.imageWidth,
+      },
+    ];
 
     return (
       <View style={styles.container}>

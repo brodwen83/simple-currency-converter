@@ -14,7 +14,7 @@ const TEMP_QUOTE_PRICE = '79.74';
 const TEMP_CONVERSION_RATE = 0.7974;
 const TEMP_CONVERSION_DATE = new Date();
 
-class Home extends Component {
+class Home extends Component<*> {
   handlePressBaseCurrency = () => {
     console.log('press base');
   };
@@ -23,7 +23,7 @@ class Home extends Component {
     console.log('press quote');
   };
 
-  handleTextChange = (text) => {
+  handleTextChange = (text: string) => {
     console.log(text);
   };
 
