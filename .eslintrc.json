@@ -18,6 +18,8 @@
   },
   "plugins": ["react"],
   "rules": {
+    "arrow-parens": [1, "as-needed", { "requireForBlockBody": true }],
+    "react/jsx-props-no-spreading": 1,
     "react/no-unescaped-entities": 1,
     "react/jsx-filename-extension": [
       2,
@@ -27,6 +29,16 @@
     ],
     "react/forbid-prop-types": [0],
     "react/require-default-props": [0],
-    "global-require": [0]
+    "global-require": [0],
+    "react/prefer-stateless-function": 1,
+    "object-curly-newline": [
+      1,
+      {
+        "ObjectExpression": "always",
+        "ObjectPattern": { "multiline": true },
+        "ImportDeclaration": "never",
+        "ExportDeclaration": { "multiline": true, "minProperties": 3 }
+      }
+    ]
   }
 }
