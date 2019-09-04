@@ -18,6 +18,14 @@
   },
   "plugins": ["react"],
   "rules": {
+    "space-before-function-paren": [
+      "error",
+      {
+        "anonymous": "ignore",
+        "named": "ignore",
+        "asyncArrow": "always"
+      }
+    ],
     "arrow-parens": [1, "as-needed", { "requireForBlockBody": true }],
     "react/jsx-props-no-spreading": 1,
     "react/no-unescaped-entities": 1,
