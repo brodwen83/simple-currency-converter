@@ -4,20 +4,36 @@
     "es6": true
   },
   "extends": ["airbnb"],
-  "parser": "babel-eslint",
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly"
   },
   "parserOptions": {
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": true,
+      "modules": true
     },
     "ecmaVersion": 2018,
     "sourceType": "module"
   },
-  "plugins": ["react"],
+  "parser": "babel-eslint",
+  "plugins": ["react", "jsx-a11y"],
   "rules": {
+    "react/prefer-stateless-function": "off",
+    "react/jsx-filename-extension": "off",
+    "import/prefer-default-export": 1,
+    "react/destructuring-assignment": "off",
+    "react/button-has-type": 1,
+    "jsx-a11y/anchor-is-valid": 1,
+    "react/require-default-props": 1,
+    "react/default-props-match-prop-types": 1,
+    "no-underscore-dangle": [
+      "error",
+      {
+        "allow": ["_seconds"]
+      }
+    ],
+    "react/jsx-wrap-multilines": "off",
     "space-before-function-paren": [
       "error",
       {
@@ -29,16 +45,8 @@
     "arrow-parens": [1, "as-needed", { "requireForBlockBody": true }],
     "react/jsx-props-no-spreading": 1,
     "react/no-unescaped-entities": 1,
-    "react/jsx-filename-extension": [
-      2,
-      {
-        "extensions": [".js", ".jsx"]
-      }
-    ],
     "react/forbid-prop-types": [0],
-    "react/require-default-props": [0],
     "global-require": [0],
-    "react/prefer-stateless-function": 1,
     "object-curly-newline": [
       1,
       {

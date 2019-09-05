@@ -4,6 +4,10 @@ import { StyleSheet } from 'react-native';
 export default EStyleSheet.create({
   $underlayColor: '$border',
 
+  container: {
+    marginTop: 20,
+    flex: 1,
+  },
   row: {
     paddingHorizontal: 20,
     paddingVertical: 16,

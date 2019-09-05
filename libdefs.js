@@ -70,3 +70,6 @@ declare module 'prop-types' {
 declare module 'color' {
   declare module.exports: any;
 }
+declare module '@expo/vector-icons' {
+  declare module.exports: any;
+}
