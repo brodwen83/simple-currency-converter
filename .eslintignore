@@ -1,0 +1,5 @@
+public/
+coverage/
+libdefs.js
+serviceWorker.js
+node_modules/

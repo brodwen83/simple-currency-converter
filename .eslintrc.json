@@ -18,13 +18,11 @@
   "parser": "babel-eslint",
   "plugins": ["react"],
   "rules": {
+    "react/jsx-wrap-multilines": "off",
     "react/require-default-props": 1,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
     "arrow-parens": [2, "as-needed", { "requireForBlockBody": true }],
-    "object-curly-newline": [
-      "error",
-      { "ObjectExpression": "always", "ObjectPattern": "never" }
-    ],
+    "object-curly-newline": 1,
     "global-require": "off"
   }
 }
