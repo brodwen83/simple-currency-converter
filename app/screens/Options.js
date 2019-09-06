@@ -1,10 +1,12 @@
 /* eslint-disable no-alert */
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import {
   ScrollView, StatusBar, Platform, Linking,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { ListItem, Separator } from '../components/List';
+import { connectAlert } from '../components/Alert';
 
 const ICON_PREFIX = Platform.OS === 'ios' ? 'ios' : 'md';
 const ICON_COLOR = '#868686';
@@ -18,16 +20,22 @@ class Options extends Component<*> {
   };
 
   handlePressSite = async () => {
+    const { alertWithType } = this.props;
+
     try {
-      await Linking.openURL('http://fixer.io');
+      await Linking.openURL('htssstp://fixer.io');
     } catch (error) {
-      alert('An unexpected error occured.');
+      alertWithType(
+        'error',
+        'Sorry',
+        "Fixer.io can't be opened as of the moment.",
+      );
     }
   };
 
   render() {
     return (
-      <ScrollView style={{ marginTop: 30 }}>
+      <ScrollView>
         <StatusBar translucent={false} barStyle="default" />
         <ListItem
           text="Themes"
@@ -58,4 +66,11 @@ class Options extends Component<*> {
   }
 }
 
-export default Options;
+Options.propTypes = {
+  navigation: PropTypes.shape({
+    navigate: PropTypes.func,
+  }),
+  alertWithType: PropTypes.func,
+};
+
+export default connectAlert(Options);
