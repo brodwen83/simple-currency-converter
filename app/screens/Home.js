@@ -16,11 +16,15 @@ const TEMP_CONVERSION_DATE = new Date();
 
 class Home extends Component<*> {
   handlePressBaseCurrency = () => {
-    console.log('press base');
+    const { navigation } = this.props;
+
+    navigation.navigate('CurrencyList', { title: 'Base Currency' });
   };
 
   handlePressQuoteCurrency = () => {
-    console.log('press quote');
+    const { navigation } = this.props;
+
+    navigation.navigate('CurrencyList', { title: 'Base Quote  Currency' });
   };
 
   handleTextChange = (text: string) => {
