@@ -12,7 +12,11 @@ const styles = EStyleSheet.create({
 
 class Themes extends Component<*> {
   handleThemePress = (color: string) => {
-    console.log('press theme', color);
+    const { navigation } = this.props;
+
+    console.log('color press', color);
+
+    navigation.goBack();
   };
 
   render() {

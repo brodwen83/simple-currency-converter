@@ -9,7 +9,9 @@ const ICON_SIZE = 23;
 
 class Options extends Component<*> {
   handlePressThemes = () => {
-    console.log('press themes');
+    const { navigation } = this.props;
+
+    navigation.navigate('Themes');
   };
 
   handlePressSite = () => {

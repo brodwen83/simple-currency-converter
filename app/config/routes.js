@@ -1,10 +1,11 @@
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
-// import { StatusBar } from 'react-native';
 
-import { Home, CurrencyList } from '../screens';
+import {
+  Home, CurrencyList, Options, Themes,
+} from '../screens';
 
-const NavStack = createStackNavigator(
+const HomeNavStack = createStackNavigator(
   {
     Home: {
       screen: Home,
@@ -12,6 +13,26 @@ const NavStack = createStackNavigator(
         header: () => null,
       },
     },
+    Options: {
+      screen: Options,
+      navigationOptions: {
+        headerTitle: 'Options',
+      },
+    },
+    Themes: {
+      screen: Themes,
+      navigationOptions: {
+        headerTitle: 'Themes',
+      },
+    },
+  },
+  {
+    headerMode: 'screen',
+  },
+);
+
+const CurrencyListNavStack = createStackNavigator(
+  {
     CurrencyList: {
       screen: CurrencyList,
       navigationOptions: ({ navigation }) => ({
@@ -20,11 +41,26 @@ const NavStack = createStackNavigator(
     },
   },
   {
-    mode: 'modal',
-    // cardStyle: { paddingTop: StatusBar.currentHeight },
+    headerMode: 'screen',
   },
 );
 
-const Navigator = createAppContainer(NavStack);
+const RootNavStack = createStackNavigator(
+  {
+    Home: {
+      screen: HomeNavStack,
+      navigationOptions: {
+        header: () => null,
+      },
+    },
+    CurrencyList: {
+      screen: CurrencyListNavStack,
+    },
+  },
+  {
+    mode: 'modal',
+    headerMode: 'none',
+  },
+);
 
-export default Navigator;
+export default createAppContainer(RootNavStack);
