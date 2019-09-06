@@ -12,7 +12,9 @@ type Props = {
   conversionRate: number,
 };
 
-const LastConverted = ({ base, date, quote, conversionRate }: Props) => (
+const LastConverted = ({
+  base, date, quote, conversionRate,
+}: Props) => (
   <Text style={styles.smallText}>
     {`1 ${base} = ${conversionRate} ${quote} as of ${moment(date).format(
       'MMMM D, YYYY',
@@ -21,7 +23,7 @@ const LastConverted = ({ base, date, quote, conversionRate }: Props) => (
 );
 
 LastConverted.propTypes = {
-  date: PropTypes.shape.isRequired,
+  date: PropTypes.instanceOf(Date).isRequired,
   base: PropTypes.string.isRequired,
   quote: PropTypes.string.isRequired,
   conversionRate: PropTypes.number.isRequired,

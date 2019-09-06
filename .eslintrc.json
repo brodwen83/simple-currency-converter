@@ -21,8 +21,10 @@
     "react/jsx-wrap-multilines": "off",
     "react/require-default-props": 1,
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "arrow-parens": [2, "as-needed", { "requireForBlockBody": true }],
+    "arrow-parens": [1, "as-needed", { "requireForBlockBody": true }],
     "object-curly-newline": 1,
-    "global-require": "off"
+    "global-require": "off",
+    "react/prefer-stateless-function": "off",
+    "react/jsx-props-no-spreading": 1
   }
 }

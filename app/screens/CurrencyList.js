@@ -8,7 +8,9 @@ const TEMP_CURRENT_CURRENCY = 'CAD';
 
 class CurrencyList extends Component<*> {
   handlePress = () => {
-    console.log('row press');
+    const { navigation } = this.props;
+
+    navigation.goBack(null);
   };
 
   render() {
@@ -16,7 +18,6 @@ class CurrencyList extends Component<*> {
       <View
         style={{
           flex: 1,
-          marginTop: 30,
         }}
       >
         <StatusBar translucent={false} barStyle="default" />

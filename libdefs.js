@@ -73,3 +73,12 @@ declare module 'color' {
 declare module '@expo/vector-icons' {
   declare module.exports: any;
 }
+declare module 'react-navigation-stack' {
+  declare module.exports: any;
+}
+declare module 'react-native-dropdownalert' {
+  declare module.exports: any;
+}
+declare module 'hoist-non-react-statics' {
+  declare module.exports: any;
+}
