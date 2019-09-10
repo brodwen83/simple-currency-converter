@@ -7,6 +7,11 @@ import { ClearButton } from '../components/Button';
 import { LastConverted } from '../components/Text';
 import { Header } from '../components/Header';
 
+import {
+  swapCurrency,
+  changeCurrencyAmount,
+} from '../redux/currencies/currencies.action';
+
 const TEMP_BASE_CURRENCY = 'USD';
 const TEMP_QUOTE_CURRENCY = 'GBP';
 const TEMP_BASE_PRICE = '100';
@@ -27,12 +32,15 @@ class Home extends Component<*> {
     navigation.navigate('CurrencyList', { title: 'Base Quote  Currency' });
   };
 
-  handleTextChange = (text: string) => {
-    console.log(text);
+  handleTextChange = (amount: string) => {
+    console.log(amount);
+    console.log(changeCurrencyAmount(parseFloat(amount)));
   };
 
   handleSwapCurrency = () => {
     console.log('reverse press');
+
+    console.log(swapCurrency());
   };
 
   handleOptionsPress = () => {
