@@ -1,6 +1,7 @@
+/* eslint-disable operator-linebreak */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StatusBar, KeyboardAvoidingView } from 'react-native';
+import { Text, StatusBar, KeyboardAvoidingView } from 'react-native';
 import Container from '../components/Container/Container';
 import { Logo } from '../components/Logo';
 import { InputWithButton } from '../components/TextInput';
@@ -39,24 +40,57 @@ type Dispatchers = {
 
 type Props = StateProps & OtherProps & Dispatchers;
 
-class Home extends Component<Props> {
+type State = {
+  errorFetching: string,
+};
+
+class Home extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      errorFetching: '',
+    };
+  }
+
   componentDidMount = () => {
     const { getInitConversions } = this.props;
+    console.log('cDM->');
+    this.setState({
+      errorFetching: '',
+    });
 
     getInitConversions();
   };
 
-  componentWillReceiveProps(nextProps) {
-    const { alertWithType, currencyError } = this.props;
+  // componentWillReceiveProps(nextProps) {
+  //   const { alertWithType, currencyError } = this.props;
 
-    if (nextProps.currencyError && nextProps.currencyError !== currencyError) {
-      alertWithType('error', 'Unexpected Error', nextProps.currencyError);
+  //   if (nextProps.currencyError !== currencyError) {
+  //     alertWithType('error', 'Unexpected Error', nextProps.currencyError);
+  //   }
+  // }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.currencyError !== state.errorFetching) {
+      return {
+        errorFetching: props.currencyError,
+      };
     }
+    return null;
   }
 
-  // static getDerivedStateFromProps(props, state) {}
+  componentDidUpdate(prevProps, prevState) {
+    const { errorFetching } = this.state;
+    const { alertWithType } = this.props;
 
-  // componentDidUpdate(prevProps, prevState) {}
+    if (
+      prevState.errorFetching !== '' &&
+      errorFetching !== prevState.errorFetching
+    ) {
+      alertWithType('error', 'Unexpected Error', errorFetching);
+    }
+  }
 
   handlePressBaseCurrency = () => {
     const { navigation } = this.props;
@@ -105,12 +139,14 @@ class Home extends Component<Props> {
       primaryColor,
     } = this.props;
 
+    const { errorFetching } = this.state;
+
     let quotePrice = (conversionRate * amount).toFixed(2);
     if (isFetching) {
       quotePrice = '...';
     }
 
-    return (
+    const renderHome = (
       <Container backgroundColor={primaryColor}>
         <StatusBar translucent={false} barStyle="light-content" />
 
@@ -150,6 +186,16 @@ class Home extends Component<Props> {
         </KeyboardAvoidingView>
       </Container>
     );
+
+    const renderErrorPage = (
+      <Container backgroundColor={primaryColor}>
+        <Text>{errorFetching}</Text>
+      </Container>
+    );
+
+    if (errorFetching) return renderErrorPage;
+
+    return renderHome;
   }
 }
 

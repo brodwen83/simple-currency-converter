@@ -79,6 +79,7 @@ export default (state: Object = initialState, action: Object): Object => {
       return {
         ...state,
         error: action.error,
+        isFetching: false,
       };
 
     default:

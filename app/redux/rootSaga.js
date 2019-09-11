@@ -14,7 +14,7 @@ import {
 import { FIXER_API } from '../../config';
 
 const getLatestRate = (currency: string) =>
-  fetch(`${FIXER_API}/latest?base=${currency}ssss`);
+  fetch(`${FIXER_API}/latest?base=${currency}`);
 
 function* fetchLatestConversionRates(action: Object) {
   try {
