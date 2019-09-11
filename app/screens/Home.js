@@ -1,20 +1,24 @@
+/* eslint-disable operator-linebreak */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StatusBar, KeyboardAvoidingView } from 'react-native';
+import { Text, StatusBar, KeyboardAvoidingView } from 'react-native';
 import Container from '../components/Container/Container';
 import { Logo } from '../components/Logo';
 import { InputWithButton } from '../components/TextInput';
 import { ClearButton } from '../components/Button';
 import { LastConverted } from '../components/Text';
 import { Header } from '../components/Header';
+import { connectAlert } from '../components/Alert';
 
 import {
   swapCurrency,
   changeCurrencyAmount,
+  getInitialConversion,
 } from '../redux/currencies/currencies.action';
 
 type OtherProps = {
   navigation: Object,
+  alertWithType: Function,
 };
 
 type StateProps = {
@@ -25,16 +29,69 @@ type StateProps = {
   lastConvertedDate: string,
   isFetching: boolean,
   primaryColor: string,
+  currencyError: string,
 };
 
 type Dispatchers = {
   swap: Function,
   changeAmount: Function,
+  getInitConversions: Function,
 };
 
 type Props = StateProps & OtherProps & Dispatchers;
 
-class Home extends Component<Props> {
+type State = {
+  errorFetching: string,
+};
+
+class Home extends Component<Props, State> {
+  constructor(props: Props) {
+    super(props);
+
+    this.state = {
+      errorFetching: '',
+    };
+  }
+
+  componentDidMount = () => {
+    const { getInitConversions } = this.props;
+    console.log('cDM->');
+    this.setState({
+      errorFetching: '',
+    });
+
+    getInitConversions();
+  };
+
+  // componentWillReceiveProps(nextProps) {
+  //   const { alertWithType, currencyError } = this.props;
+
+  //   if (nextProps.currencyError !== currencyError) {
+  //     alertWithType('error', 'Unexpected Error', nextProps.currencyError);
+  //   }
+  // }
+
+  static getDerivedStateFromProps(props, state) {
+    if (props.currencyError !== state.errorFetching) {
+      return {
+        errorFetching: props.currencyError,
+      };
+    }
+    return null;
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    const { errorFetching } = this.state;
+    const { alertWithType } = this.props;
+
+    if (
+      prevState.errorFetching !== '' &&
+      errorFetching !== prevState.errorFetching
+    ) {
+      alertWithType('error', 'Unexpected Error', errorFetching);
+    }
+  }
+
   handlePressBaseCurrency = () => {
     const { navigation } = this.props;
 
@@ -82,12 +139,14 @@ class Home extends Component<Props> {
       primaryColor,
     } = this.props;
 
+    const { errorFetching } = this.state;
+
     let quotePrice = (conversionRate * amount).toFixed(2);
     if (isFetching) {
       quotePrice = '...';
     }
 
-    return (
+    const renderHome = (
       <Container backgroundColor={primaryColor}>
         <StatusBar translucent={false} barStyle="light-content" />
 
@@ -127,11 +186,23 @@ class Home extends Component<Props> {
         </KeyboardAvoidingView>
       </Container>
     );
+
+    const renderErrorPage = (
+      <Container backgroundColor={primaryColor}>
+        <Text>{errorFetching}</Text>
+      </Container>
+    );
+
+    if (errorFetching) return renderErrorPage;
+
+    return renderHome;
   }
 }
 
 const mapStateToProps = (state: Object) => {
-  const { amount, baseCurrency, quoteCurrency } = state.currencies;
+  const {
+    amount, baseCurrency, quoteCurrency, error,
+  } = state.currencies;
   const { primaryColor } = state.theme;
   const conversionSelector = state.currencies.conversions[baseCurrency] || {};
   const rates = conversionSelector.rates || {};
@@ -148,15 +219,17 @@ const mapStateToProps = (state: Object) => {
     lastConvertedDate,
     isFetching,
     primaryColor,
+    currencyError: error,
   };
 };
 
 const mapDispatchToProps = (dispatch: Function) => ({
   swap: () => dispatch(swapCurrency()),
   changeAmount: (amount: number) => dispatch(changeCurrencyAmount(amount)),
+  getInitConversions: () => dispatch(getInitialConversion()),
 });
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Home);
+)(connectAlert(Home));
