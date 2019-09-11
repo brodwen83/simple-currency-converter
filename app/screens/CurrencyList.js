@@ -17,6 +17,7 @@ type OtherProps = {
 type StateProps = {
   baseCurrency: string,
   quoteCurrency: string,
+  primaryColor: string,
 };
 
 type Props = OtherProps & StateProps;
@@ -38,7 +39,12 @@ class CurrencyList extends Component<Props> {
   };
 
   render() {
-    const { navigation, baseCurrency, quoteCurrency } = this.props;
+    const {
+      navigation,
+      baseCurrency,
+      quoteCurrency,
+      primaryColor,
+    } = this.props;
     const { type } = navigation.state.params;
 
     let selectedCurrency = quoteCurrency;
@@ -62,6 +68,7 @@ class CurrencyList extends Component<Props> {
               text={item}
               selected={item === selectedCurrency}
               onPress={() => this.handlePress(item)}
+              iconBackground={primaryColor}
             />
           )}
           keyExtractor={item => item}
@@ -74,10 +81,13 @@ class CurrencyList extends Component<Props> {
 
 const mapStateToProps = (state: Object) => {
   const { baseCurrency, quoteCurrency } = state.currencies;
+  const { primaryColor } = state.theme;
+  console.log('primaryColor', primaryColor);
 
   return {
     baseCurrency,
     quoteCurrency,
+    primaryColor,
   };
 };
 
