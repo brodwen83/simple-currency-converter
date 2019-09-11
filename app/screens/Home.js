@@ -11,6 +11,7 @@ import { Header } from '../components/Header';
 import {
   swapCurrency,
   changeCurrencyAmount,
+  getInitialConversion,
 } from '../redux/currencies/currencies.action';
 
 type OtherProps = {
@@ -30,11 +31,18 @@ type StateProps = {
 type Dispatchers = {
   swap: Function,
   changeAmount: Function,
+  getInitConversions: Function,
 };
 
 type Props = StateProps & OtherProps & Dispatchers;
 
 class Home extends Component<Props> {
+  componentDidMount = () => {
+    const { getInitConversions } = this.props;
+
+    getInitConversions();
+  };
+
   handlePressBaseCurrency = () => {
     const { navigation } = this.props;
 
@@ -154,6 +162,7 @@ const mapStateToProps = (state: Object) => {
 const mapDispatchToProps = (dispatch: Function) => ({
   swap: () => dispatch(swapCurrency()),
   changeAmount: (amount: number) => dispatch(changeCurrencyAmount(amount)),
+  getInitConversions: () => dispatch(getInitialConversion()),
 });
 
 export default connect(
