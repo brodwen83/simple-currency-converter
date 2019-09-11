@@ -37,13 +37,19 @@ class Home extends Component<Props> {
   handlePressBaseCurrency = () => {
     const { navigation } = this.props;
 
-    navigation.navigate('CurrencyList', { title: 'Base Currency' });
+    navigation.navigate('CurrencyList', {
+      title: 'Base Currency',
+      type: 'base',
+    });
   };
 
   handlePressQuoteCurrency = () => {
     const { navigation } = this.props;
 
-    navigation.navigate('CurrencyList', { title: 'Base Quote  Currency' });
+    navigation.navigate('CurrencyList', {
+      title: 'Base Quote  Currency',
+      type: 'quote',
+    });
   };
 
   handleTextChange = (amount: string) => {
@@ -74,14 +80,17 @@ class Home extends Component<Props> {
       isFetching,
     } = this.props;
 
-    let quotePrice = (conversionRate * amount).toFixed(2).toString();
-    if (isFetching) quotePrice = '...';
+    let quotePrice = (conversionRate * amount).toFixed(2);
+    if (isFetching) {
+      quotePrice = '...';
+    }
 
     return (
       <Container>
         <StatusBar translucent={false} barStyle="light-content" />
 
         <Header onPress={this.handleOptionsPress} />
+
         <KeyboardAvoidingView behavior="padding">
           <Logo />
 
@@ -124,7 +133,7 @@ const mapStateToProps = (state: Object) => {
   const lastConvertedDate = conversionSelector.date
     ? new Date(conversionSelector.date)
     : new Date();
-  const isFetching = conversionSelector.isFetching || false;
+  const { isFetching } = conversionSelector;
 
   return {
     amount,
