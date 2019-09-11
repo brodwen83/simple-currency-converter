@@ -14,7 +14,7 @@ import {
 import { FIXER_API } from '../../config';
 
 const getLatestRate = (currency: string) =>
-  fetch(`${FIXER_API}/latest?base=${currency}`);
+  fetch(`${FIXER_API}/latest?base=${currency}ssss`);
 
 function* fetchLatestConversionRates(action: Object) {
   try {
@@ -30,12 +30,12 @@ function* fetchLatestConversionRates(action: Object) {
     const result = yield response.json();
 
     if (result.error) {
-      yield put({ type: CONVERSION_ERROR });
+      yield put({ type: CONVERSION_ERROR, error: result.error });
     } else {
       yield put({ type: CONVERSION_RESULT, result });
     }
-  } catch (error) {
-    console.log('error', error);
+  } catch (err) {
+    yield put({ type: CONVERSION_ERROR, error: err.message });
   }
 }
 

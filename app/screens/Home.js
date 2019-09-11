@@ -7,6 +7,7 @@ import { InputWithButton } from '../components/TextInput';
 import { ClearButton } from '../components/Button';
 import { LastConverted } from '../components/Text';
 import { Header } from '../components/Header';
+import { connectAlert } from '../components/Alert';
 
 import {
   swapCurrency,
@@ -16,6 +17,7 @@ import {
 
 type OtherProps = {
   navigation: Object,
+  alertWithType: Function,
 };
 
 type StateProps = {
@@ -26,6 +28,7 @@ type StateProps = {
   lastConvertedDate: string,
   isFetching: boolean,
   primaryColor: string,
+  currencyError: string,
 };
 
 type Dispatchers = {
@@ -42,6 +45,18 @@ class Home extends Component<Props> {
 
     getInitConversions();
   };
+
+  componentWillReceiveProps(nextProps) {
+    const { alertWithType, currencyError } = this.props;
+
+    if (nextProps.currencyError && nextProps.currencyError !== currencyError) {
+      alertWithType('error', 'Unexpected Error', nextProps.currencyError);
+    }
+  }
+
+  // static getDerivedStateFromProps(props, state) {}
+
+  // componentDidUpdate(prevProps, prevState) {}
 
   handlePressBaseCurrency = () => {
     const { navigation } = this.props;
@@ -139,7 +154,9 @@ class Home extends Component<Props> {
 }
 
 const mapStateToProps = (state: Object) => {
-  const { amount, baseCurrency, quoteCurrency } = state.currencies;
+  const {
+    amount, baseCurrency, quoteCurrency, error,
+  } = state.currencies;
   const { primaryColor } = state.theme;
   const conversionSelector = state.currencies.conversions[baseCurrency] || {};
   const rates = conversionSelector.rates || {};
@@ -156,6 +173,7 @@ const mapStateToProps = (state: Object) => {
     lastConvertedDate,
     isFetching,
     primaryColor,
+    currencyError: error,
   };
 };
 
@@ -168,4 +186,4 @@ const mapDispatchToProps = (dispatch: Function) => ({
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(Home);
+)(connectAlert(Home));
