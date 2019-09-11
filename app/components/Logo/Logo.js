@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
-import { View,
+import {
+  View,
   Text,
   ImageBackground,
   Keyboard,
   Animated,
-  Platform } from 'react-native';
+  Platform,
+} from 'react-native';
 import styles from './styles';
 
 const ANIMATION_DURATION = 250;
 
-type Props = {};
+type Props = {
+  tintColor: string,
+};
 
 class Logo extends Component<Props> {
   containerImageWidth: any;
@@ -78,6 +82,7 @@ class Logo extends Component<Props> {
   };
 
   render() {
+    const { tintColor } = this.props;
     const containerImageStyle = [
       styles.containerImage,
       {
@@ -85,12 +90,12 @@ class Logo extends Component<Props> {
         height: this.containerImageWidth,
       },
     ];
-
     const imageStyle = [
       styles.logo,
       {
         width: this.imageWidth,
       },
+      tintColor ? { tintColor } : null,
     ];
 
     return (

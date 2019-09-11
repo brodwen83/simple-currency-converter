@@ -1,16 +1,30 @@
 import React from 'react';
-import { View, Text, TouchableHighlight, TextInput } from 'react-native';
+import {
+  View, Text, TouchableHighlight, TextInput,
+} from 'react-native';
 import color from 'color';
 import PropTypes from 'prop-types';
 
 import styles from './styles';
 
-const InputWithButton = (props: Object) => {
-  const { buttonText, onPress, editable = true } = props;
+type Props = {
+  buttonText: string,
+  onPress: Function,
+  editable?: boolean,
+  buttonTextColor?: string,
+};
+
+const InputWithButton = (props: Props) => {
+  const {
+    buttonText, onPress, editable = true, buttonTextColor,
+  } = props;
   const containerStyles = [styles.container];
   const underlayColor = color(styles.$buttonBackgroundColorBase).darken(
     styles.$buttonBackgroundColorModifier,
   );
+
+  const buttonTextStyles = [styles.buttonText];
+  if (buttonTextColor) buttonTextStyles.push({ color: buttonTextColor });
 
   if (editable === false) {
     containerStyles.push(styles.conatainerDisabled);
@@ -23,7 +37,7 @@ const InputWithButton = (props: Object) => {
         style={styles.buttonContainer}
         onPress={onPress}
       >
-        <Text style={styles.buttonText}>{buttonText}</Text>
+        <Text style={buttonTextStyles}>{buttonText}</Text>
       </TouchableHighlight>
       <View style={styles.border} />
       <TextInput
@@ -40,6 +54,7 @@ InputWithButton.propTypes = {
   buttonText: PropTypes.string.isRequired,
   onPress: PropTypes.func.isRequired,
   editable: PropTypes.bool,
+  buttonTextColor: PropTypes.string,
 };
 
 export default InputWithButton;
