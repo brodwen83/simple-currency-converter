@@ -27,6 +27,8 @@
 ; Ignore metro
 .*/node_modules/metro/.*
 
+enhanced-resolve/test
+
 [include]
 
 [libs]
